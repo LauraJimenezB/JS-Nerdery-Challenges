@@ -28,31 +28,51 @@ document.body.addEventListener('click', (e) => {
 	if (e.target.matches('button')) {
 		const key = e.target;
 		const keyContent = key.textContent;
-		const displayContent = document.getElementById('display').textContent;
 		const databody = document.body.dataset;
+		const displayContent = display.textContent;
 		let secondValue;
 
-		if (key.className === 'operation-btn' && key.id === 'equals') {
-			const { firstValue } = databody;
-			const { operator } = databody;
-			secondValue = displayContent;
-
-			display.textContent = calculate(firstValue, operator, secondValue);
-			databody.previousKeyType = 'calculate';
-		} else if (key.className === 'operation-btn' && key.id === 'clear') {
-			display.textContent = '0';
-			databody.previousKeyType = 'number';
-		} else if (key.className === 'operation-btn' && key.id !== 'equals' && key.id !== 'clear') {
-			databody.previousKeyType = 'operator';
-			databody.firstValue = displayContent;
-			databody.operator = key.id;
-		} else {
+		if (key.className !== 'operation-btn') {
 			if (displayContent === '0' || databody.previousKeyType === 'operator' || databody.previousKeyType === 'calculate') {
 				display.textContent = keyContent;
 			} else {
 				display.textContent = `${displayContent}${keyContent}`;
 			}
 			databody.previousKeyType = 'number';
+		} else if (key.id === 'clear') {
+			display.textContent = '0';
+			databody.firstValue = '';
+			databody.operator = '';
+			databody.secondValue = '';
+			databody.prevResult = '';
+		} else if (key.id === 'equals') {
+			const { firstValue, operator, prevResult } = databody;
+			secondValue = displayContent;
+			let calculatedValue;
+			if (prevResult) {
+				calculatedValue = calculate(prevResult, operator, secondValue);
+			} else {
+				calculatedValue = calculate(firstValue, operator, secondValue);
+			}
+			display.textContent = calculatedValue;
+			databody.previousKeyType = 'calculate';
+			databody.result = calculatedValue;
+			databody.firstValue = calculatedValue;
+			databody.prevResult = '';
+		} else if (key.id !== 'equals' && key.id !== 'clear') {
+			if (databody.firstValue && databody.previousKeyType !== 'calculate') {
+				if (databody.secondValue) {
+					const { prevResult } = databody;
+					databody.firstValue = prevResult;
+				}
+				databody.secondValue = displayContent;
+				const result = calculate(databody.firstValue, databody.operator, databody.secondValue);
+				databody.prevResult = result;
+				display.textContent = result;
+			}
+			databody.firstValue = displayContent;
+			databody.previousKeyType = 'operator';
+			databody.operator = key.id;
 		}
 	}
 });
