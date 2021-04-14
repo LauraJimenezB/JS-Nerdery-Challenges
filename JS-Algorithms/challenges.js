@@ -75,7 +75,8 @@ const circularArray = (index) => {
 	}
 	const firstArray = initialArray.slice(newIndex, 5);
 	const lastArray = initialArray.slice(0, newIndex);
-	return (firstArray.concat(lastArray));
+	const newArray = [...firstArray, ...lastArray];
+	return newArray;
 };
 
 circularArray(2);
