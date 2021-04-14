@@ -113,7 +113,6 @@ const ownPower = (number, lastDigits) => {
 	const result = sum.toString().slice(lastDigits * (-1));
 	return result;
 };
-//    5.949463230586041e+27
 
 ownPower(10, 3);
 ownPower(12, 7);
