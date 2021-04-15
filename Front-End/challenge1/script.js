@@ -5,15 +5,15 @@ let count = parseInt(document.getElementById('counter').innerHTML, 10);
 const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
 
-let result = 0;
-const more = 1;
-const less = -1;
+const increase = () => {
+	count += 1;
+	counter.innerHTML = count;
+};
+const decrease = () => {
+	count -= 1;
+	counter.innerHTML = count;
+};
 
-function counterHandler(modify) {
-	count += modify;
-	result = count;
-	counter.innerHTML = result;
-}
 
-increaseBtn.addEventListener('click', () => counterHandler(more));
-decreaseBtn.addEventListener('click', () => counterHandler(less));
+increaseBtn.addEventListener('click', increase);
+decreaseBtn.addEventListener('click', decrease);
