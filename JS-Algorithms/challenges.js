@@ -60,7 +60,12 @@ const circularArray = (index) => {
 	const initialArray = COUNTRY_NAMES;
 	const newIndex = index % 5;
 
-	const newArray = [...initialArray.slice(newIndex), ...initialArray.slice(0, newIndex)];
+	let newArray;
+	if (newIndex === 0) {
+		newArray = initialArray;
+	}
+
+	newArray = [...initialArray.slice(newIndex), ...initialArray.slice(0, newIndex)];
 	return newArray;
 };
 
@@ -99,7 +104,7 @@ const ownPower = (number, lastDigits) => {
 		array.push(i ** i);
 	}
 	let sum = array.reduce((a, b) => a + b, 0);
-	sum = BigInt(sum).toString().replace('n', '');
+	sum = BigInt(sum).toString();
 
 	const result = sum.slice(lastDigits * (-1));
 	return result;
@@ -133,13 +138,8 @@ const digitSum = (n) => {
 		array.push(i);
 	}
 	let total = array.reduce((a, b) => a * b, 1);
-	total = BigInt(total);
-	total = total.toString().replace('n', '');
-	let sum = 0;
-	for (let i = 0; i < total.length; i++) {
-		sum += parseInt(total[i], 10);
-	}
-	return sum;
+	total = BigInt(total).toString().split('');
+	return total.reduce((a, b) => parseInt(a, 10) + parseInt(b, 10), 0);
 };
 
 digitSum(10);
