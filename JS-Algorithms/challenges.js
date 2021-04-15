@@ -60,9 +60,7 @@ const circularArray = (index) => {
 	const initialArray = COUNTRY_NAMES;
 	const newIndex = index % 5;
 
-	const firstArray = initialArray.slice(newIndex, 5);
-	const lastArray = initialArray.slice(0, newIndex);
-	const newArray = [...firstArray, ...lastArray];
+	const newArray = [...initialArray.slice(newIndex), ...initialArray.slice(0, newIndex)];
 	return newArray;
 };
 
