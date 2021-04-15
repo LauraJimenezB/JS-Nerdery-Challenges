@@ -15,18 +15,9 @@ Invoking "readableTime(3690)" should return "01:01:30" (HH:MM:SS)
 
 const readableTime = (seconds) => {
 	// YOUR CODE HERE...
-	let hours;
-	if (seconds >= 3600) {
-		hours = Math.floor(seconds / 3600);
-	} else {
-		hours = '00';
-	}
-	let minutes;
-	if (seconds >= 60) {
-		minutes = Math.floor((seconds % 3600) / 60);
-	} else {
-		minutes = '00';
-	}
+	let hours = seconds >= 3600 ? String(Math.floor(seconds / 3600)) : '00';
+	let minutes = seconds >= 60 ? String(Math.floor((seconds % 3600) / 60)) : '00';
+
 	let secs = seconds % 60;
 	if (hours !== '00' && hours < 10) {
 		hours = `0${hours}`;
@@ -67,12 +58,8 @@ const COUNTRY_NAMES = ['Germany', 'Norway', 'Island', 'Japan', 'Israel'];
 const circularArray = (index) => {
 	// YOUR CODE HERE...
 	const initialArray = COUNTRY_NAMES;
-	let newIndex;
-	if (index > 4) {
-		newIndex = index % 5;
-	} else {
-		newIndex = index;
-	}
+	const newIndex = index % 5;
+
 	const firstArray = initialArray.slice(newIndex, 5);
 	const lastArray = initialArray.slice(0, newIndex);
 	const newArray = [...firstArray, ...lastArray];
@@ -106,12 +93,17 @@ The last 3 digits for the sum of powers from 1 to 10 is "317"
 
 const ownPower = (number, lastDigits) => {
 	// YOUR CODE HERE...
-	let sum = 0;
-	for (let i = 1; i <= number; i++) {
+	/* for (let i = 1; i <= number; i++) {
 		sum += i ** i;
+	} */
+	const array = [];
+	for (let i = 1; i <= number; i++) {
+		array.push(i ** i);
 	}
-	sum = sum.toPrecision(Math.floor(Math.log10(sum) + 1));
-	const result = sum.toString().slice(lastDigits * (-1));
+	let sum = array.reduce((a, b) => a + b, 0);
+	sum = BigInt(sum).toString().replace('n', '');
+
+	const result = sum.slice(lastDigits * (-1));
 	return result;
 };
 
