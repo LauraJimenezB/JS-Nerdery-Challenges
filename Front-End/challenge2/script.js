@@ -12,7 +12,23 @@ function calculate(n1, operator, n2) {
 	let result = '';
 	const num1 = parseInt(n1, 10);
 	const num2 = parseInt(n2, 10);
-	if (operator === 'add') {
+	switch (operator) {
+	case 'add':
+		result = num1 + num2;
+		break;
+	case 'subtrack':
+		result = num1 - num2;
+		break;
+	case 'multiplication':
+		result = num1 * num2;
+		break;
+	case 'division':
+		result = num1 / num2;
+		break;
+	default:
+		break;
+	}
+	/* if (operator === 'add') {
 		result = num1 + num2;
 	} else if (operator === 'subtrack') {
 		result = num1 - num2;
@@ -20,7 +36,7 @@ function calculate(n1, operator, n2) {
 		result = num1 * num2;
 	} else if (operator === 'division') {
 		result = num1 / num2;
-	}
+	} */
 	return result;
 }
 
